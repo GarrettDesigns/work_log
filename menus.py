@@ -8,7 +8,8 @@ import utils
 def display_main_menu():
     """Display the main menu for the worklog.
 
-    User can select between options to search for records, create a new one, or quite the program entirely.
+    User can select between options to search for records,
+    create a new one, or quite the program entirely.
     """
     while True:
         utils.clear_screen()
