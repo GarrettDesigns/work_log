@@ -4,19 +4,20 @@ import csv
 import os
 
 import constants
-from menu import MainMenu
-from search import Search
+from utils import Utilities
+from menu import Menu
+from entry import Entry
 
 
 class WorkLog:
     """The worklog class representing the work log and all of its data."""
 
     def __init__(self):
-        self.main_menu = MainMenu()
-        self.search = Search()
 
-    def access_log(self):  # Find a better name for this
-        """Method to display the main worklog and allow a user interaction."""
+        menu = Menu()
+        entry = Entry()
+        utils = Utilities()
+        current_menu = constants.MAIN_MENU
 
         if not os.path.exists(constants.FILENAME):
             with open(constants.FILENAME, 'a') as file:
@@ -24,8 +25,23 @@ class WorkLog:
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 writer.writeheader()
 
-        self.main_menu.get_user_choice()
+        while True:
+            utils.clear_screen()
+            menu.display(current_menu)
+            choice = menu.get_user_choice()
+
+            if current_menu == constants.MAIN_MENU:
+                if choice == 'c':
+                    entry.create_new_entry()
+                if choice == 's':
+                    current_menu = constants.SEARCH_MENU
+                elif choice == 'q':
+                    break
+
+            if current_menu == constants.SEARCH_MENU:
+                if choice == 'm':
+                    current_menu = constants.MAIN_MENU
 
 
 if __name__ == '__main__':
-    WorkLog().access_log()
+    WorkLog()
