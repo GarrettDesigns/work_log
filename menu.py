@@ -2,13 +2,10 @@
    and functionality of the menu navigation system"""
 
 
-import csv
-import constants
-
-from utils import Utilities
-
-
 class Menu:
+    '''Class to create new menu's for the application.
+
+    Call this class passing in a list of menu choices.'''
 
     def display(self, menu):
         """Display the current menu for the worklog.
@@ -27,15 +24,3 @@ class Menu:
 
     def get_user_choice(self):
         return input("\nPlease make your selection: ").lower()
-
-
-class MainMenu(Menu):
-
-    def __init__(self):
-        super().__init__(menu=constants.MAIN_MENU)
-
-
-class SearchMenu(Menu):
-
-    def __init__(self):
-        super().__init__(menu=constants.SEARCH_MENU)

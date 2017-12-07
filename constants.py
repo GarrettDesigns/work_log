@@ -12,3 +12,5 @@ SEARCH_MENU = ["[D] Search by Date",
                "[M] Return to the Main Menu"]
 
 FILENAME = 'worklog.csv'
+
+FIELDNAMES = ['date', 'title', 'time_spent', 'notes']
