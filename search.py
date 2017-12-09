@@ -12,12 +12,13 @@ class Search:
 
     def __init__(self):
         self.utils = Utilities()
+        self.results = list()
 
     def search_exact_date(self):
 
-        results = list()
-
         while True:
+
+            self.utils.clear_screen()
             query_date = input('Please enter a date to search: ')
 
             try:
@@ -29,46 +30,58 @@ class Search:
                 self.utils.clear_screen()
                 continue
 
-            break
+            with open('worklog.csv') as log:
+                reader = csv.DictReader(
+                    log, fieldnames=constants.FIELDNAMES)
 
-        with open('worklog.csv') as log:
-            reader = csv.DictReader(log, fieldnames=constants.FIELDNAMES)
+                for line in reader:
+                    if query_date == line['date']:
+                        self.results.append(line)
 
-            for line in reader:
-                if query_date == line['date']:
-                    results.append(line)
-
-        if results:
-            index = 0
-            entry = results[index]
-
-            while True:
-                self.utils.clear_screen()
-
-                print('title: {}\n'
-                      'date: {}\n'
-                      'time spent: {}\n'
-                      'notes: {}\n'.format(entry['title'],
-                                           entry['date'],
-                                           entry['time_spent'],
-                                           entry['notes']))
+            if not self.results:
                 print("-------------------------------\n")
+                print('No results found...')
+                input('Press Enter to try again.')
+                continue
+            else:
+                self.display_search_results()
+                break
 
-                choice = input(
-                    "Choose an action: "
-                    "[N]ext"
-                    "[P]revious"
-                    "[E]dit"
-                    "[D]elete"
-                    "[S]earch Menu: ").lower()
+    def display_search_results(self):
 
-                if choice == 'n':
-                    entry = results[index + 1]
-                elif choice == 'p':
-                    entry = results[index - 1]
-                elif choice == 's':
-                    break
-        else:
+        index = 0
+
+        while True:
+            entry = self.results[index]
+
+            self.utils.clear_screen()
+
+            print('title: {}\n'
+                  'date: {}\n'
+                  'time spent: {}\n'
+                  'notes: {}\n'.format(entry['title'],
+                                       entry['date'],
+                                       entry['time_spent'],
+                                       entry['notes']))
             print("-------------------------------\n")
-            print('No results found...')
-            input('Press Enter to try again.')
+
+            choice = input(
+                "Choose an action: "
+                "[N]ext"
+                "[P]revious"
+                "[E]dit"
+                "[D]elete"
+                "[S]earch Menu: ").lower()
+
+            if choice == 'n':
+                if index != (len(self.results) - 1):
+                    index += 1
+                else:
+                    index = 0
+            elif choice == 'p':
+                if index != 0:
+                    index -= 1
+                else:
+                    index = (len(self.results) - 1)
+            elif choice == 's':
+                break
