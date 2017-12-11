@@ -5,6 +5,7 @@
 import datetime
 
 from utils import Utilities
+from validation import Validation
 
 
 class Entry(dict):
@@ -14,6 +15,7 @@ class Entry(dict):
     def __init__(self):
         super().__init__()
         self.utils = Utilities()
+        self.validation = Validation()
 
     def create_new_entry(self):
         '''Method to create a new work entry entry.
@@ -29,12 +31,8 @@ class Entry(dict):
         while True:
             self['date'] = input(
                 "Please enter a date in the format - MM/DD/YYYY: ")
-            try:
-                datetime.datetime.strptime(self['date'], '%m/%d/%Y')
-            except ValueError:
-                input("\n{} doesn't seem to be a valid date!"
-                      " Press enter to try again.".format(
-                          self['date']))
+
+            if not self.validation.is_valid_date(self['date']):
                 self.utils.clear_screen()
                 continue
 

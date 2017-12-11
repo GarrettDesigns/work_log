@@ -2,16 +2,17 @@
 
 import csv
 import re
-import datetime
 
 import constants
 from utils import Utilities
+from validation import Validation
 
 
 class Search:
 
     def __init__(self):
         self.utils = Utilities()
+        self.validation = Validation()
         self.results = list()
 
     def search_exact_date(self):
@@ -21,12 +22,7 @@ class Search:
             self.utils.clear_screen()
             query_date = input('Please enter a date to search: ')
 
-            try:
-                datetime.datetime.strptime(query_date, '%m/%d/%Y')
-            except ValueError:
-                input("\n{} doesn't seem to be a valid date!"
-                      " Press enter to try again.".format(
-                          query_date))
+            if not self.validation.is_valid_date(query_date):
                 self.utils.clear_screen()
                 continue
 
