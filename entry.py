@@ -2,8 +2,6 @@
   controlling all entryic and data pertaining to work entry entries'''
 
 
-import datetime
-
 from utils import Utilities
 from validation import Validation
 
@@ -41,13 +39,8 @@ class Entry(dict):
         while True:
             self['time_spent'] = input(
                 "Please enter the time spent on this entry in hours: ")
-            try:
-                int(self['time_spent'])
-            except ValueError:
-                input("\n{} is not a valid amount of time,"
-                      " please enter a number. Press enter to try again."
-                      .format(self['time_spent']))
 
+            if not self.validation.is_valid_number(self['time_spent']):
                 self.utils.clear_screen()
                 continue
 

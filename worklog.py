@@ -60,7 +60,17 @@ class WorkLog:
 
             if current_menu == constants.SEARCH_MENU:
                 if choice == 'e':
-                    search.search_exact_date()
+                    search.search('Please enter a date to search: ', 'date')
+                if choice == 't':
+                    search.search(
+                        'Please enter a time to search: ', 'time_spent')
+                if choice == 'p':
+                    search.search(
+                        'Please enter a word or phrase to search: ',
+                        'exact_match')
+                if choice == 'r':
+                    search.search(
+                        'Please enter a word or phrase to search: ', 'regex')
                 if choice == 'm':
                     current_menu = constants.MAIN_MENU
 
