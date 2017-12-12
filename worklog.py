@@ -57,7 +57,7 @@ class WorkLog:
                 elif choice == 'q':
                     break
 
-            if current_menu == constants.SEARCH_MENU:
+            elif current_menu == constants.SEARCH_MENU:
 
                 if not validation.is_valid_input(choice, menu='etprm'):
                     continue
