@@ -9,7 +9,8 @@ class Validation:
             input("\nYou must enter a valid input."
                   " Press enter to try again.")
             return False
-        elif user_input not in menu:
+
+        if menu != '' and user_input not in menu:
             input('\n{} is not a valid choice!'
                   ' Press enter to try again.'.format(user_input))
             return False

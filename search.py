@@ -24,17 +24,16 @@ class Search:
 
             worklog = self.utils.read_file()
 
-            # if not self.validation.is_valid_input(query):
-            #     self.utils.clear_screen()
-            #     continue
-
             if search_type == 'date':
                 if not self.validation.is_valid_date(query):
                     self.utils.clear_screen()
                     continue
-
             elif search_type == 'time_spent':
                 if not self.validation.is_valid_number(query):
+                    self.utils.clear_screen()
+                    continue
+            elif search_type == 'exact_match' or search_type == 'regex':
+                if not self.validation.is_valid_input(query):
                     self.utils.clear_screen()
                     continue
 
