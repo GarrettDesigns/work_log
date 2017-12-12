@@ -39,3 +39,15 @@ class Validation:
             return False
 
         return True
+
+    def is_valid_date_range(self, date_range):
+        if len(date_range) < 2:
+            input('{}, not a valid date range.'
+                  'You must enter two valid dates.'.format(''.join(date_range)))
+            return False
+
+        if not (self.is_valid_date(date_range[0])
+                and self.is_valid_date(date_range[1])):
+            return False
+
+        return True

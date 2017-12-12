@@ -27,15 +27,15 @@ class Search:
 
             if search_type == 'date':
                 if not self.validation.is_valid_date(query):
-                    self.utils.clear_screen()
                     continue
             elif search_type == 'time_spent':
                 if not self.validation.is_valid_number(query):
-                    self.utils.clear_screen()
                     continue
             elif search_type == 'exact_match' or search_type == 'regex':
                 if not self.validation.is_valid_input(query):
-                    self.utils.clear_screen()
+                    continue
+            elif search_type == 'date_range':
+                if not self.validation.is_valid_date_range(query.split(', ')):
                     continue
 
             search = re.compile(r'{}'.format(query), re.I)
@@ -50,17 +50,20 @@ class Search:
                     if search.findall(line['title']) \
                             or search.findall(line['notes']):
                         self.results.append(line)
+
                 elif search_type == 'date_range':
                     real_date = datetime.strptime(
                         line['date'], '%m/%d/%Y')
                     date_range = query.split(', ')
 
-                    if datetime.strptime(date_range[0], '%m/%d/%Y') <= real_date \
-                            and datetime.strptime(date_range[1], '%m/%d/%Y') >= \
-                            real_date:
+                    if (datetime.strptime(date_range[0], '%m/%d/%Y') <=
+                        real_date and
+                        datetime.strptime(date_range[1], '%m/%d/%Y') >=
+                            real_date):
                         self.results.append(line)
 
             self.display_search_results()
+
             break
 
     def display_search_results(self):
@@ -109,11 +112,13 @@ class Search:
                         index += 1
                     else:
                         index = 0
+
                 elif choice == 'p':
                     if index != 0:
                         index -= 1
                     else:
                         index = (len(self.results) - 1)
+
                 elif choice == 's':
                     Menu().display(constants.SEARCH_MENU)
                     self.results = list()

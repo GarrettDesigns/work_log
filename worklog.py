@@ -40,7 +40,6 @@ class WorkLog:
                     continue
 
                 if choice == 'c':
-
                     utils.clear_screen()
 
                     with open(constants.FILENAME, 'a') as file:
@@ -54,6 +53,7 @@ class WorkLog:
 
                 elif choice == 's':
                     current_menu = constants.SEARCH_MENU
+
                 elif choice == 'q':
                     break
 
@@ -64,19 +64,25 @@ class WorkLog:
 
                 if choice == 'e':
                     search.search('Please enter a date to search: ', 'date')
+
                 elif choice == 'd':
                     search.search(
-                        'Please enter a date range to search: ', 'date_range')
+                        'Please enter two comma separated dates to search'
+                        '\n(ex. 01/15/1982, 12/11/2017): ', 'date_range')
+
                 elif choice == 't':
                     search.search(
                         'Please enter a time to search: ', 'time_spent')
+
                 elif choice == 'p':
                     search.search(
                         'Please enter a word or phrase to search: ',
                         'exact_match')
+
                 elif choice == 'r':
                     search.search(
                         'Please enter a word or phrase to search: ', 'regex')
+
                 elif choice == 'm':
                     current_menu = constants.MAIN_MENU
 
