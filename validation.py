@@ -4,6 +4,7 @@ import datetime
 
 
 class Validation:
+
     def is_valid_input(self, user_input, menu=''):
         if user_input == '':
             input("\nYou must enter a valid input."

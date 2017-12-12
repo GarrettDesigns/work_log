@@ -59,11 +59,14 @@ class WorkLog:
 
             elif current_menu == constants.SEARCH_MENU:
 
-                if not validation.is_valid_input(choice, menu='etprm'):
+                if not validation.is_valid_input(choice, menu='edtprm'):
                     continue
 
                 if choice == 'e':
                     search.search('Please enter a date to search: ', 'date')
+                elif choice == 'd':
+                    search.search(
+                        'Please enter a date range to search: ', 'date_range')
                 elif choice == 't':
                     search.search(
                         'Please enter a time to search: ', 'time_spent')

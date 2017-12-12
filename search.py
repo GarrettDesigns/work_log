@@ -4,6 +4,7 @@ import re
 
 import constants
 
+from datetime import datetime
 from menu import Menu
 from utils import Utilities
 from validation import Validation
@@ -40,6 +41,7 @@ class Search:
             search = re.compile(r'{}'.format(query), re.I)
 
             for line in worklog:
+
                 if search_type == 'date' or search_type == 'time_spent':
                     if search.match(line[search_type]):
                         self.results.append(line)
@@ -47,6 +49,15 @@ class Search:
                 elif search_type == 'exact_match' or search_type == 'regex':
                     if search.findall(line['title']) \
                             or search.findall(line['notes']):
+                        self.results.append(line)
+                elif search_type == 'date_range':
+                    real_date = datetime.strptime(
+                        line['date'], '%m/%d/%Y')
+                    date_range = query.split(', ')
+
+                    if datetime.strptime(date_range[0], '%m/%d/%Y') <= real_date \
+                            and datetime.strptime(date_range[1], '%m/%d/%Y') >= \
+                            real_date:
                         self.results.append(line)
 
             self.display_search_results()

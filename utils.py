@@ -21,6 +21,8 @@ class Utilities:
             reader = csv.DictReader(
                 log, fieldnames=constants.FIELDNAMES)
 
+            next(reader)
+
             for line in reader:
                 file_contents.append(line)
 
