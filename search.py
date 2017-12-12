@@ -90,6 +90,10 @@ class Search:
                     "[D]elete, "
                     "[S]earch Menu: ").lower()
 
+                if not self.validation.is_valid_input(choice, menu='npeds'):
+                    self.utils.clear_screen()
+                    continue
+
                 if choice == 'n':
                     if index != (len(self.results) - 1):
                         index += 1
