@@ -4,12 +4,14 @@ import datetime
 
 
 class Validation:
-    def is_valid_input(self, query):
-        try:
-            len(query)
-        except ValueError:
+    def is_valid_input(self, user_input, menu=''):
+        if user_input == '':
             input("\nYou must enter a valid input."
                   " Press enter to try again.")
+            return False
+        elif user_input not in menu:
+            input('\n{} is not a valid choice!'
+                  ' Press enter to try again.'.format(user_input))
             return False
 
         return True

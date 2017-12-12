@@ -24,9 +24,9 @@ class Search:
 
             worklog = self.utils.read_file()
 
-            if not self.validation.is_valid_input(query):
-                self.utils.clear_screen()
-                continue
+            # if not self.validation.is_valid_input(query):
+            #     self.utils.clear_screen()
+            #     continue
 
             if search_type == 'date':
                 if not self.validation.is_valid_date(query):

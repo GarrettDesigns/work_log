@@ -9,6 +9,7 @@ from utils import Utilities
 from menu import Menu
 from entry import Entry
 from search import Search
+from validation import Validation
 
 
 class WorkLog:
@@ -20,6 +21,7 @@ class WorkLog:
         entry = Entry()
         utils = Utilities()
         search = Search()
+        validation = Validation()
         current_menu = constants.MAIN_MENU
 
         if not os.path.exists(constants.FILENAME):
@@ -34,10 +36,7 @@ class WorkLog:
 
             if current_menu == constants.MAIN_MENU:
 
-                if choice not in 'csq':
-                    input(
-                        '\n{} is not a valid choice!'
-                        ' Press enter to try again.'.format(choice))
+                if not validation.is_valid_input(choice, menu='csq'):
                     continue
 
                 if choice == 'c':
@@ -53,25 +52,29 @@ class WorkLog:
                     input("Entry has been added, "
                           "press enter to return to the main menu")
 
-                if choice == 's':
+                elif choice == 's':
                     current_menu = constants.SEARCH_MENU
                 elif choice == 'q':
                     break
 
             if current_menu == constants.SEARCH_MENU:
+
+                if not validation.is_valid_input(choice, menu='etprm'):
+                    continue
+
                 if choice == 'e':
                     search.search('Please enter a date to search: ', 'date')
-                if choice == 't':
+                elif choice == 't':
                     search.search(
                         'Please enter a time to search: ', 'time_spent')
-                if choice == 'p':
+                elif choice == 'p':
                     search.search(
                         'Please enter a word or phrase to search: ',
                         'exact_match')
-                if choice == 'r':
+                elif choice == 'r':
                     search.search(
                         'Please enter a word or phrase to search: ', 'regex')
-                if choice == 'm':
+                elif choice == 'm':
                     current_menu = constants.MAIN_MENU
 
 
