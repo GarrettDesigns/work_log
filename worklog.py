@@ -41,15 +41,7 @@ class WorkLog:
 
                 if choice == 'c':
                     utils.clear_screen()
-
-                    with open(constants.FILENAME, 'a') as file:
-                        writer = csv.DictWriter(
-                            file, fieldnames=constants.FIELDNAMES)
-                        writer.writerow(entry.create_new_entry())
-                    utils.clear_screen()
-
-                    input("Entry has been added, "
-                          "press enter to return to the main menu")
+                    entry.create_new_entry()
 
                 elif choice == 's':
                     current_menu = constants.SEARCH_MENU

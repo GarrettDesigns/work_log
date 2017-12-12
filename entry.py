@@ -2,6 +2,10 @@
   controlling all entryic and data pertaining to work entry entries'''
 
 
+import csv
+
+import constants
+
 from utils import Utilities
 from validation import Validation
 
@@ -49,4 +53,12 @@ class Entry(dict):
         self['notes'] = input(
             "Enter any notes about this entry (optional): ")
 
-        return self
+        with open(constants.FILENAME, 'a') as file:
+            writer = csv.DictWriter(
+                file, fieldnames=constants.FIELDNAMES)
+            writer.writerow(self)
+
+        self.utils.clear_screen()
+
+        input("Entry has been added, "
+              "press enter to return to the main menu")
