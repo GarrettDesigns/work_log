@@ -3,6 +3,7 @@
 
 
 import csv
+import random
 
 import constants
 
@@ -26,6 +27,9 @@ class Entry(dict):
         allowing them to create a single entry entry consisting of
         a date entered, a title, the time spent working and some
         optional notes if desired'''
+
+        self['id'] = ''.join(random.choice(
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890') for _ in range(20))
 
         self['title'] = input(
             "Please choose a title for this entry: ")

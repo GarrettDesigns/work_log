@@ -14,4 +14,4 @@ SEARCH_MENU = ["[E] Search by Exact Date",
 
 FILENAME = 'worklog.csv'
 
-FIELDNAMES = ['date', 'title', 'time_spent', 'notes']
+FIELDNAMES = ['id', 'date', 'title', 'time_spent', 'notes']
