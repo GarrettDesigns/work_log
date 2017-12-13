@@ -65,70 +65,70 @@ class Search:
                             real_date):
                         self.results.append(line)
 
-            self.display_search_results()
-
-            break
+            if not self.results:
+                print("-------------------------------\n")
+                print('No results found...')
+                input('Press Enter to try again.')
+                continue
+            else:
+                self.display_search_results()
+                break
 
     def display_search_results(self):
 
         index = 0
 
         while True:
-            if not self.results:
-                print("-------------------------------\n")
-                print('No results found...')
-                input('Press Enter to try again.')
-                break
-            else:
-                num_results = len(self.results)
-                entry = self.results[index]
+            num_results = len(self.results)
+            entry = self.results[index]
 
+            self.utils.clear_screen()
+
+            print('\n{} Search Results Found'.format(num_results))
+            print("-------------------------------\n")
+
+            print('title: {}'.format(entry['title']))
+            print('date: {}'.format(entry['date']))
+            print('time spent: {}'.format(entry['time_spent']))
+            print('notes: {}'.format(entry['notes']))
+
+            print("-------------------------------")
+            print('Result {}/{}'.format((index + 1), num_results))
+            print("-------------------------------\n")
+
+            choice = input(
+                "Choose an action: "
+                "[N]ext, "
+                "[P]revious, "
+                "[E]dit, "
+                "[D]elete, "
+                "[S]earch Menu: ").lower()
+
+            if not self.validation.is_valid_input(choice, menu='npeds'):
                 self.utils.clear_screen()
+                continue
 
-                print('\n{} Search Results Found'.format(num_results))
-                print("-------------------------------\n")
+            if choice == 'n':
+                if index != (len(self.results) - 1):
+                    index += 1
+                else:
+                    index = 0
 
-                print('title: {}'.format(entry['title']))
-                print('date: {}'.format(entry['date']))
-                print('time spent: {}'.format(entry['time_spent']))
-                print('notes: {}'.format(entry['notes']))
+            elif choice == 'p':
+                if index != 0:
+                    index -= 1
+                else:
+                    index = (len(self.results) - 1)
 
-                print("-------------------------------")
-                print('Result {}/{}'.format((index + 1), num_results))
-                print("-------------------------------\n")
+            elif choice == 'e' or choice == 's' or choice == 'd':
+                if choice == 'e':
+                    self.entry.update_current_entry(
+                        entry['id'], edit_mode='edit')
+                if choice == 'd':
+                    self.entry.update_current_entry(
+                        entry['id'], edit_mode='delete')
 
-                choice = input(
-                    "Choose an action: "
-                    "[N]ext, "
-                    "[P]revious, "
-                    "[E]dit, "
-                    "[D]elete, "
-                    "[S]earch Menu: ").lower()
+                self.menu.display(constants.SEARCH_MENU)
+                self.results = list()
 
-                if not self.validation.is_valid_input(choice, menu='npeds'):
-                    self.utils.clear_screen()
-                    continue
-
-                if choice == 'n':
-                    if index != (len(self.results) - 1):
-                        index += 1
-                    else:
-                        index = 0
-
-                elif choice == 'p':
-                    if index != 0:
-                        index -= 1
-                    else:
-                        index = (len(self.results) - 1)
-
-                elif choice == 'e' or choice == 's' or choice == 'd':
-                    if choice == 'e':
-                        self.entry.update_current_entry(
-                            entry['id'], edit_mode='edit')
-                    if choice == 'd':
-                        self.entry.update_current_entry(
-                            entry['id'], edit_mode='delete')
-
-                    self.menu.display(constants.SEARCH_MENU)
-                    self.results = list()
-                    break
+                break
