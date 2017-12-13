@@ -20,23 +20,34 @@ class Entry(dict):
         self.utils = Utilities()
         self.validation = Validation()
 
-    def create_new_entry(self):
-        '''Method to create a new work entry entry.
+    def _display_keep_current_value(self, value):
+        self.utils.clear_screen()
+        print('Press enter to keep current value: {}'.format(
+            value))
+        print('-----------------')
 
-        This method walks the user through a series of questions
-        allowing them to create a single entry entry consisting of
-        a date entered, a title, the time spent working and some
-        optional notes if desired'''
+    def _get_entry_data(self, editing=False, log_to_edit=None):
 
-        self['id'] = ''.join(random.choice(
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890') for _ in range(20))
+        if not editing:
+            self['id'] = ''.join(random.choice(
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890') for _ in range(20))
+        else:
+            self['id'] = log_to_edit['id']
+
+        current_title = " ({})".format(log_to_edit['title']) if editing else ''
+        current_date = " ({})".format(log_to_edit['date']) if editing else ''
+        current_time_spent = " ({})".format(
+            log_to_edit['time_spent']) if editing else ''
+        current_notes = " ({})".format(log_to_edit['notes']) if editing else ''
 
         self['title'] = input(
-            "Please choose a title for this entry: ")
+            "\nPlease choose a title for this entry{}: "
+            .format(current_title)) or log_to_edit['title']
 
         while True:
-            self['date'] = input(
-                "Please enter a date in the format - MM/DD/YYYY: ")
+            self['date'] = (input(
+                "\nPlease enter a date (ex. MM/DD/YYYY){}: "
+                .format(current_date)) or log_to_edit['date'])
 
             if not self.validation.is_valid_date(self['date']):
                 self.utils.clear_screen()
@@ -45,8 +56,9 @@ class Entry(dict):
             break
 
         while True:
-            self['time_spent'] = input(
-                "Please enter the time spent on this entry in hours: ")
+            self['time_spent'] = (input(
+                "\nPlease enter the time spent on this entry in hours{}: "
+                .format(current_time_spent)) or log_to_edit['time_spent'])
 
             if not self.validation.is_valid_number(self['time_spent']):
                 self.utils.clear_screen()
@@ -54,8 +66,19 @@ class Entry(dict):
 
             break
 
-        self['notes'] = input(
-            "Enter any notes about this entry (optional): ")
+        self['notes'] = (input(
+            "\nEnter any notes about this entry (optional){}: "
+            .format(current_notes)) or log_to_edit['notes'])
+
+    def create_new_entry(self):
+        '''Method to create a new work entry.
+
+        This method walks the user through a series of questions
+        allowing them to create a single entry consisting of
+        a date entered, a title, the time spent working and some
+        optional notes if desired'''
+
+        self._get_entry_data()
 
         with open(constants.FILENAME, 'a') as file:
             writer = csv.DictWriter(
@@ -64,5 +87,29 @@ class Entry(dict):
 
         self.utils.clear_screen()
 
-        input("Entry has been added, "
+        input("\nEntry has been added, "
               "press enter to return to the main menu")
+
+    def update_current_entry(self, entry_id, edit_mode):
+
+        worklog = self.utils.read_file()
+        status = 'updated' if edit_mode == 'edit' else 'deleted'
+
+        for index, entry in enumerate(worklog):
+            if entry['id'] == entry_id:
+                if edit_mode == 'edit':
+                    self._get_entry_data(editing=True, log_to_edit=entry)
+                    worklog[index] = self
+
+                if edit_mode == 'delete':
+                    del worklog[index]
+
+            with open('worklog.csv', 'w') as log:
+                writer = csv.DictWriter(log, constants.FIELDNAMES)
+                writer.writeheader()
+
+                for row in worklog:
+                    writer.writerow(row)
+
+        self.utils.clear_screen()
+        input("\nEntry has been {}! Press enter to continue.".format(status))

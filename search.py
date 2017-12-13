@@ -8,6 +8,7 @@ from datetime import datetime
 from menu import Menu
 from utils import Utilities
 from validation import Validation
+from entry import Entry
 
 
 class Search:
@@ -15,7 +16,9 @@ class Search:
     def __init__(self):
         self.utils = Utilities()
         self.validation = Validation()
+        self.entry = Entry()
         self.results = list()
+        self.menu = Menu()
 
     def search(self, query_text, search_type=''):
 
@@ -84,13 +87,12 @@ class Search:
 
                 print('\n{} Search Results Found'.format(num_results))
                 print("-------------------------------\n")
-                print('title: {}\n'
-                      'date: {}\n'
-                      'time spent: {}\n'
-                      'notes: {}\n'.format(entry['title'],
-                                           entry['date'],
-                                           entry['time_spent'],
-                                           entry['notes']))
+
+                print('title: {}'.format(entry['title']))
+                print('date: {}'.format(entry['date']))
+                print('time spent: {}'.format(entry['time_spent']))
+                print('notes: {}'.format(entry['notes']))
+
                 print("-------------------------------")
                 print('Result {}/{}'.format((index + 1), num_results))
                 print("-------------------------------\n")
@@ -119,7 +121,14 @@ class Search:
                     else:
                         index = (len(self.results) - 1)
 
-                elif choice == 's':
-                    Menu().display(constants.SEARCH_MENU)
+                elif choice == 'e' or choice == 's' or choice == 'd':
+                    if choice == 'e':
+                        self.entry.update_current_entry(
+                            entry['id'], edit_mode='edit')
+                    if choice == 'd':
+                        self.entry.update_current_entry(
+                            entry['id'], edit_mode='delete')
+
+                    self.menu.display(constants.SEARCH_MENU)
                     self.results = list()
                     break
