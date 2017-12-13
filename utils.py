@@ -1,8 +1,10 @@
 """The utility file for storage of common utility methods and variables"""
 
 
+# import standard Python libraries
 import csv
 
+# import custom libraries and classes
 import constants
 
 

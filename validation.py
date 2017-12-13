@@ -1,5 +1,6 @@
 '''This module contains methods for validating user input'''
 
+# import standard Python libraries
 import datetime
 
 

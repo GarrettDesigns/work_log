@@ -1,10 +1,11 @@
 '''Module containing the Entry class which is responsible for
   controlling all entryic and data pertaining to work entry entries'''
 
-
+# import standard Python libraries
 import csv
 import random
 
+# import custom libraries and classes
 import constants
 
 from utils import Utilities

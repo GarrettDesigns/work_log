@@ -1,8 +1,10 @@
 """Module contains the worklog object."""
 
+# import standard python libraries
 import csv
 import os
 
+# import custom libraries and classes
 import constants
 
 from utils import Utilities
