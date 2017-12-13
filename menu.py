@@ -3,9 +3,7 @@
 
 
 class Menu:
-    '''Class to create new menu's for the application.
-
-    Call this class passing in a list of menu choices.'''
+    '''Class to create and display menu's for the application.'''
 
     def display(self, menu):
         """Display the current menu for the worklog.
@@ -23,4 +21,6 @@ class Menu:
         print("-------------------------------")
 
     def get_user_choice(self):
+        '''Method returns the results of user input.'''
+
         return input("\nPlease make your selection: ").lower()

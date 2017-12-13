@@ -1,10 +1,11 @@
 '''Module containing the search functionality of the application'''
 
+# Import Python standard libraries
 import re
-
-import constants
-
 from datetime import datetime
+
+# Import custom classes and helper methods
+import constants
 from menu import Menu
 from utils import Utilities
 from validation import Validation
@@ -12,15 +13,22 @@ from entry import Entry
 
 
 class Search:
+    '''This class contains all methods for searching the worklog
+    and displaying the results'''
 
     def __init__(self):
         self.utils = Utilities()
         self.validation = Validation()
         self.entry = Entry()
-        self.results = list()
         self.menu = Menu()
 
+        self.results = list()
+
     def search(self, query_text, search_type=''):
+        '''Method for searching the worklog
+
+        This method takes the text to ask the user for input
+        and the type of search to conduct.'''
 
         while True:
             self.utils.clear_screen()
@@ -60,8 +68,8 @@ class Search:
                     date_range = query.split(', ')
 
                     if (datetime.strptime(date_range[0], '%m/%d/%Y') <=
-                        real_date and
-                        datetime.strptime(date_range[1], '%m/%d/%Y') >=
+                            real_date and
+                            datetime.strptime(date_range[1], '%m/%d/%Y') >=
                             real_date):
                         self.results.append(line)
 
@@ -75,6 +83,8 @@ class Search:
                 break
 
     def display_search_results(self):
+        '''This method displays the results of a user search
+        if any are found.'''
 
         index = 0
 

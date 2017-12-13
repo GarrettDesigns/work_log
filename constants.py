@@ -1,4 +1,7 @@
-'''This module contains constants that are used throughout the application'''
+'''This module contains constants that are used throughout the application.
+
+These include menu options, the filename to write the log to, and the
+fieldnames for the log header.'''
 
 
 MAIN_MENU = ["[C] Create a new entry",

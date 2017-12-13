@@ -7,6 +7,7 @@ import constants
 
 
 class Utilities:
+    '''Class containing different utility methods for the worklog.'''
 
     def clear_screen(self):
         '''Method providing a way to clear the screen after
@@ -15,6 +16,12 @@ class Utilities:
         print("\033c", end="")
 
     def read_file(self):
+        '''Method to read file contents and return them.
+
+        This method is used to allow storing of worklog data
+        as an array of dictionaries in a variable or some other
+        container for use in logic.'''
+
         file_contents = list()
 
         with open('worklog.csv', 'r') as log:

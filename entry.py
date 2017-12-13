@@ -21,12 +21,19 @@ class Entry(dict):
         self.validation = Validation()
 
     def _display_keep_current_value(self, value):
+        '''Small internal helper method for display a message
+        when no results are found during a search of the log.'''
+
         self.utils.clear_screen()
         print('Press enter to keep current value: {}'.format(
             value))
         print('-----------------')
 
     def _get_entry_data(self, editing=False, log_to_edit=None):
+        '''This is an internal method of the Entry class
+
+        The purpose of this method is to house the logic for asking a user
+        for input regarding the creation or updating of a record in the log.'''
 
         if not editing:
             self['id'] = ''.join(random.choice(
@@ -91,6 +98,10 @@ class Entry(dict):
               "press enter to return to the main menu")
 
     def update_current_entry(self, entry_id, edit_mode):
+        '''Method for updating records of the worklog.
+
+        This method takes the id of the entry to update and
+        the type of update to make via the edit_mode argument.'''
 
         worklog = self.utils.read_file()
         status = 'updated' if edit_mode == 'edit' else 'deleted'

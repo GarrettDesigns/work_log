@@ -16,6 +16,7 @@ class WorkLog:
     """The worklog class representing the work log and all of its data."""
 
     def access_log(self):
+        '''Method containing the main loop to run the program.'''
 
         menu = Menu()
         entry = Entry()
